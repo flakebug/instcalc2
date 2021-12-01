@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Instrument Calculator - aspnet</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+	<div b-rbiz9xuxh6 class="container">
+		<main b-rbiz9xuxh6 role="main" class="pb-3">
+			<h1>Instrument Calculator</h1>
+
+
+			<nav>
+				<div class="nav nav-tabs" id="nav-tab" role="tablist">
+					<button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+						type="button" role="tab" aria-controls="nav-home" aria-selected="true">Configuration</button>
+					<button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+						type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Chart</button>
+				</div>
+			</nav>
+			<div class="tab-content" id="nav-tabContent">
+				<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+
+					<form class="pure-form">
+						<fieldset>
+							<legend><b>Fill Example</b></legend>
+							<div class="container">
+								<div class="row">
+									The example is not accurate value, please refer to manufacturer's datasheet
+								</div>
+								<div class="row">
+									<a onclick="fill_example_ykw_eja110e_f();"
+										class="btn btn-primary btn-block">Yokogawa EJA110E-F</a>
+								</div>
+							</div>
+						</fieldset>
+						<fieldset>
+							<legend><b>Instrument Configuration</b></legend>
+							<div class="container">
+								<div class="row">
+									<label for="lbl_tagno">Tag Number</label>
+								</div>
+								<div class="row">
+									<input type="text" value="" id="txt_tagno" class="form-control"
+										onchange="calculate_all();">
+								</div>
+							</div>
+							<div class="container">
+								<div class="row">
+									<label for="lbl_accuracy">Accuracy, FS (%)</label>
+								</div>
+								<div class="row">
+									<input type="number" step="any" step="any" value="" id="txt_accuracy"
+										class="form-control" onchange="calculate_all();">
+								</div>
+							</div>
+							<div class="container">
+								<div class="row">
+									<label for="lbl_ulimit">Lower Range Limit</label>
+								</div>
+								<div class="row">
+									<input type="number" step="any" value="" id="txt_lowerlimit" class="form-control"
+										onchange="calculate_all();">
+								</div>
+							</div>
+							<div class="container">
+								<div class="row">
+									<label for="lbl_ulimit">Upper Range Limit</label>
+								</div>
+								<div class="row">
+									<input type="number" step="any" value="" id="txt_upperlimit" class="form-control"
+										onchange="calculate_all();">
+								</div>
+							</div>
+						</fieldset>
+						<fieldset>
+							<legend><b>Test Value</b></legend>
+							<div class="row">
+								<div class="col">
+									Std. %
+								</div>
+								<div class="col">
+									Std. Value
+								</div>
+								<div class="col">
+									Measurement
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<label for="lbl_percent_i0">0%</label>
+								</div>
+								<div class="col">
+									<label for="lbl_standard_i0" id="lbl_standard_i0">_</label>
+								</div>
+								<div class="col">
+									<input type="number" step="any" value="" id="txt_value_i0" class="form-control"
+										onchange="calculate_all();">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<label for="lbl_percent_i25"> 25%</label>
+								</div>
+								<div class="col">
+									<label for="lbl_standard_i25" id="lbl_standard_i25">_</label>
+								</div>
+								<div class="col">
+									<input type="number" step="any" value="" id="txt_value_i25" class="form-control"
+										onchange="calculate_all();">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<label for="lbl_percent_i50"> 50%</label>
+								</div>
+								<div class="col">
+									<label for="lbl_standard_i50" id="lbl_standard_i50">_</label>
+								</div>
+								<div class="col">
+									<input type="number" step="any" value="" id="txt_value_i50" class="form-control"
+										onchange="calculate_all();">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<label for="lbl_percent_i75"> 75%</label>
+								</div>
+								<div class="col">
+									<label for="lbl_standard_i75" id="lbl_standard_i75">_</label>
+								</div>
+								<div class="col">
+									<input type="number" step="any" value="" id="txt_value_i75" class="form-control"
+										onchange="calculate_all();">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<label for="lbl_percent_i100"> 100%</label>
+								</div>
+								<div class="col">
+									<label for="lbl_standard_i100" id="lbl_standard_i100">_</label>
+								</div>
+								<div class="col">
+									<input type="number" step="any" value="" id="txt_value_i100" class="form-control"
+										onchange="calculate_all();">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<label for="lbl_percent_d75"> 75%</label>
+								</div>
+								<div class="col">
+									<label for="lbl_standard_d75" id="lbl_standard_d75">_</label>
+								</div>
+								<div class="col">
+									<input type="number" step="any" value="" id="txt_value_d75" class="form-control"
+										onchange="calculate_all();">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<label for="lbl_percent_d50"> 50%</label>
+								</div>
+								<div class="col">
+									<label for="lbl_standard_d50" id="lbl_standard_d50">_</label>
+								</div>
+								<div class="col">
+									<input type="number" step="any" value="" id="txt_value_d50" class="form-control"
+										onchange="calculate_all();">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<label for="lbl_percent_d25"> 25%</label>
+								</div>
+								<div class="col">
+									<label for="lbl_standard_d25" id="lbl_standard_d25">_</label>
+								</div>
+								<div class="col">
+									<input type="number" step="any" value="" id="txt_value_d25" class="form-control"
+										onchange="calculate_all();">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<label for="lbl_percent_d0"> 0%</label>
+								</div>
+								<div class="col">
+									<label for="lbl_standard_d0" id="lbl_standard_d0">_</label>
+								</div>
+								<div class="col">
+									<input type="number" step="any" value="" id="txt_value_d0" class="form-control"
+										onchange="calculate_all();">
+								</div>
+							</div>
+							<legend><b>Calculation Value</b></legend>
+							<div class="row">
+								<div class="col">
+									Allowable Error
+								</div>
+								<div class="col">
+									<label for="lbl_allowable_error" id="lbl_allowable_error">_</label>
+								</div>
+							</div>
+
+						</fieldset>
+						<div class="container">
+							<div class="row">
+								<a onclick="clear_all();" class="btn btn-primary btn-block">Clear All</a>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+					<div class="container">
+						<div class="row">
+							<canvas id="myChart"></canvas>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			</nav>
+
+
+
+
+
+			<script>
+				var myChart;
+
+				function calculate_all() {
+					var txt_tagno = document.getElementById('txt_tagno').value;
+					var txt_accuracy = document.getElementById('txt_accuracy').value;
+					var txt_lowerlimit = document.getElementById('txt_lowerlimit').value;
+					var txt_upperlimit = document.getElementById('txt_upperlimit').value;
+					var txt_value_i0 = document.getElementById('txt_value_i0').value;
+					var txt_value_i25 = document.getElementById('txt_value_i25').value;
+					var txt_value_i50 = document.getElementById('txt_value_i50').value;
+					var txt_value_i75 = document.getElementById('txt_value_i75').value;
+					var txt_value_i100 = document.getElementById('txt_value_i100').value;
+					var txt_value_d75 = document.getElementById('txt_value_d75').value;
+					var txt_value_d50 = document.getElementById('txt_value_d50').value;
+					var txt_value_d25 = document.getElementById('txt_value_d25').value;
+					var txt_value_d0 = document.getElementById('txt_value_d0').value;
+
+					var accuracy = parseFloat(txt_accuracy) / 100;
+					var lowerlimit = parseFloat(txt_lowerlimit);
+					var upperlimit = parseFloat(txt_upperlimit);
+					var value_i0 = parseFloat(txt_value_i0);
+					var value_i25 = parseFloat(txt_value_i25);
+					var value_i50 = parseFloat(txt_value_i50);
+					var value_i75 = parseFloat(txt_value_i75);
+					var value_i100 = parseFloat(txt_value_i100);
+					var value_d75 = parseFloat(txt_value_d75);
+					var value_d50 = parseFloat(txt_value_d50);
+					var value_d25 = parseFloat(txt_value_d25);
+					var value_d0 = parseFloat(txt_value_d0);
+
+					var range = upperlimit - lowerlimit;
+
+					var range_100 = range * 1.00 + lowerlimit;
+					var range_75 = range * 0.75 + lowerlimit;
+					var range_50 = range * 0.50 + lowerlimit;
+					var range_25 = range * 0.25 + lowerlimit;
+					var range_0 = range * 0.00 + lowerlimit;
+
+					var i0_diff = value_i0 - range_0;
+					var i25_diff = value_i25 - range_25;
+					var i50_diff = value_i50 - range_50;
+					var i75_diff = value_i75 - range_75;
+					var i100_diff = value_i100 - range_100;
+					var d75_diff = value_d75 - range_75;
+					var d50_diff = value_d50 - range_50;
+					var d25_diff = value_d25 - range_25;
+					var d0_diff = value_d0 - range_0;
+
+					var allowable_error = range * accuracy;
+
+					document.getElementById('lbl_standard_i0').innerHTML = range * 0.00 + lowerlimit;
+					document.getElementById('lbl_standard_i25').innerHTML = range * 0.25 + lowerlimit;
+					document.getElementById('lbl_standard_i50').innerHTML = range * 0.50 + lowerlimit;
+					document.getElementById('lbl_standard_i75').innerHTML = range * 0.75 + lowerlimit;
+					document.getElementById('lbl_standard_i100').innerHTML = range * 1.00 + lowerlimit;
+					document.getElementById('lbl_standard_d75').innerHTML = range * 0.75 + lowerlimit;
+					document.getElementById('lbl_standard_d50').innerHTML = range * 0.50 + lowerlimit;
+					document.getElementById('lbl_standard_d25').innerHTML = range * 0.25 + lowerlimit;
+					document.getElementById('lbl_standard_d0').innerHTML = range * 0.00 + lowerlimit;
+
+					document.getElementById('lbl_allowable_error').innerHTML = allowable_error;
+
+					create_chart(txt_tagno,
+						allowable_error,
+						range_100,
+						range_75,
+						range_50,
+						range_25,
+						range_0,
+						i0_diff,
+						i25_diff,
+						i50_diff,
+						i75_diff,
+						i100_diff,
+						d75_diff,
+						d50_diff,
+						d25_diff,
+						d0_diff);
+
+				}
+
+
+				function create_chart(txt_tagno,
+					allowable_error,
+					range_100,
+					range_75,
+					range_50,
+					range_25,
+					range_0,
+					value_i0,
+					value_i25,
+					value_i50,
+					value_i75,
+					value_i100,
+					value_d75,
+					value_d50,
+					value_d25,
+					value_d0) {
+
+
+
+
+
+					if (typeof myChart != "undefined") {
+						myChart.destroy();
+					}
+
+					const data = {
+						datasets: [{
+								backgroundColor: 'red',
+								borderColor: 'red',
+								label: 'lower side allowable error',
+								data: [{
+									x: -allowable_error,
+									y: range_0
+								}, {
+									x: -allowable_error,
+									y: range_25
+								}, {
+									x: -allowable_error,
+									y: range_50
+								}, {
+									x: -allowable_error,
+									y: range_75
+								}, {
+									x: -allowable_error,
+									y: range_100
+								}],
+							},
+							{
+								backgroundColor: 'blue',
+								borderColor: 'blue',
+								label: 'increase',
+								data: [{
+									x: value_i0,
+									y: range_0
+								}, {
+									x: value_i25,
+									y: range_25
+								}, {
+									x: value_i50,
+									y: range_50
+								}, {
+									x: value_i75,
+									y: range_75
+								}, {
+									x: value_i100,
+									y: range_100
+								}],
+							},
+							{
+								backgroundColor: 'blue',
+								borderColor: 'blue',
+								label: 'decrease',
+								data: [{
+									x: value_i100,
+									y: range_100
+								}, {
+									x: value_d75,
+									y: range_75
+								}, {
+									x: value_d50,
+									y: range_50
+								}, {
+									x: value_d25,
+									y: range_25
+								}, {
+									x: value_d0,
+									y: range_0
+								}],
+							},
+							{
+								backgroundColor: 'red',
+								borderColor: 'red',
+								label: 'upper side allowable error',
+								data: [{
+									x: +allowable_error,
+									y: range_100
+								}, {
+									x: +allowable_error,
+									y: range_75
+								}, {
+									x: +allowable_error,
+									y: range_50
+								}, {
+									x: +allowable_error,
+									y: range_25
+								}, {
+									x: +allowable_error,
+									y: range_0
+								}],
+
+							},
+						]
+					};
+					const config = {
+						type: 'scatter',
+						data: data,
+						options: {
+							showLine: true,
+							plugins: {
+								legend: {
+									display: false
+								}
+							}
+						}
+					};
+					// === include 'setup' then 'config' above ===
+
+					myChart = new Chart(
+						document.getElementById('myChart'),
+						config
+					);
+				}
+
+				function fill_example_ykw_eja110e_f() {
+					document.getElementById('txt_tagno').value = "DPT-001";
+					document.getElementById('txt_accuracy').value = 0.055;
+					document.getElementById('txt_lowerlimit').value = 0.5;
+					document.getElementById('txt_upperlimit').value = 5;
+					document.getElementById('txt_value_i0').value = 0.499;
+					document.getElementById('txt_value_i25').value = 1.6236;
+					document.getElementById('txt_value_i50').value = 2.749;
+					document.getElementById('txt_value_i75').value = 3.868;
+					document.getElementById('txt_value_i100').value = 4.998;
+					document.getElementById('txt_value_d75').value = 3.876;
+					document.getElementById('txt_value_d50').value = 2.7515;
+					document.getElementById('txt_value_d25').value = 1.627;
+					document.getElementById('txt_value_d0').value = 0.501;
+					calculate_all();
+				}
+
+				function clear_all() {
+					document.getElementById('txt_tagno').value = "";
+					document.getElementById('txt_accuracy').value = "";
+					document.getElementById('txt_lowerlimit').value = "";
+					document.getElementById('txt_upperlimit').value = "";
+					document.getElementById('txt_value_i0').value = "";
+					document.getElementById('txt_value_i25').value = "";
+					document.getElementById('txt_value_i50').value = "";
+					document.getElementById('txt_value_i75').value = "";
+					document.getElementById('txt_value_i100').value = "";
+					document.getElementById('txt_value_d75').value = "";
+					document.getElementById('txt_value_d50').value = "";
+					document.getElementById('txt_value_d25').value = "";
+					document.getElementById('txt_value_d0').value = "";
+					document.getElementById('lbl_standard_i0').innerHTML = "_";
+					document.getElementById('lbl_standard_i25').innerHTML = "_";
+					document.getElementById('lbl_standard_i50').innerHTML = "_";
+					document.getElementById('lbl_standard_i75').innerHTML = "_";
+					document.getElementById('lbl_standard_i100').innerHTML = "_";
+					document.getElementById('lbl_standard_d75').innerHTML = "_";
+					document.getElementById('lbl_standard_d50').innerHTML = "_";
+					document.getElementById('lbl_standard_d25').innerHTML = "_";
+					document.getElementById('lbl_standard_d0').innerHTML = "_";
+					document.getElementById('lbl_allowable_error').innerHTML = "_";
+					myChart.destroy();
+				}
+			</script>
+		</main>
+	</div>
+
+	<footer b-rbiz9xuxh6 class="border-top footer text-muted">
+		<div b-rbiz9xuxh6 class="container">
+			Liang, 2021/11/27
+		</div>
+	</footer>
+
+</html>
